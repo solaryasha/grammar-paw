@@ -1,0 +1,24 @@
+{
+  "name": "grammar-paw",
+  "version": "1.0.0",
+  "description": "AI-powered grammar checking application",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev:js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "concurrently \"cd client && npm run build\" \"cd server && npm run build\""
+  },
+  "keywords": [
+    "grammar",
+    "ai",
+    "react",
+    "typescript",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

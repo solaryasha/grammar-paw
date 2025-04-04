@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import GrammarForm from './components/GrammarForm';
 import Results from './components/Results';
 
 function App() {
-  const [originalText, setOriginalText] = useState('');
-  const [correctedText, setCorrectedText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [originalText, setOriginalText] = useState<string>('');
+  const [correctedText, setCorrectedText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const checkGrammar = async (text) => {
+  const checkGrammar = async (text: string): Promise<void> => {
     setIsLoading(true);
     setError(null);
     setOriginalText(text);
     
     try {
-      const response = await axios.post('http://localhost:5000/api/grammar-check', { text });
+      const response = await axios.post<{ correctedText: string }>('http://localhost:5000/api/grammar-check', { text });
       setCorrectedText(response.data.correctedText);
     } catch (err) {
       setError('Error checking grammar. Please try again.');

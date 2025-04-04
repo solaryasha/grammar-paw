@@ -1,21 +1,20 @@
-/**
- * @typedef {Object} GrammarCheckRequest
- * @property {string} text - The text to check for grammar
- */
-
-/**
- * @typedef {Object} GrammarCheckResponse
- * @property {string} originalText - The original text that was checked
- * @property {string} correctedText - The text with grammar corrections
- */
-
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const { OpenAI } = require('openai');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { OpenAI } from 'openai';
 
 // Load environment variables
 dotenv.config();
+
+// Types
+interface GrammarCheckRequest {
+  text: string;
+}
+
+interface GrammarCheckResponse {
+  originalText: string;
+  correctedText: string;
+}
 
 // Create Express app
 const app = express();
@@ -31,13 +30,9 @@ const openai = new OpenAI({
 });
 
 // Grammar check endpoint
-/**
- * @param {express.Request} req - The Express request object
- * @param {express.Response} res - The Express response object
- */
 app.post('/api/grammar-check', async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text } = req.body as GrammarCheckRequest;
     
     if (!text) {
       return res.status(400).json({ error: 'Text is required' });
@@ -59,8 +54,7 @@ app.post('/api/grammar-check', async (req, res) => {
       max_tokens: 1000,
     });
 
-    /** @type {GrammarCheckResponse} */
-    const responseData = {
+    const responseData: GrammarCheckResponse = {
       originalText: text,
       correctedText: response.choices[0].message.content || ''
     };
@@ -73,7 +67,7 @@ app.post('/api/grammar-check', async (req, res) => {
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 

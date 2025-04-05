@@ -1,5 +1,6 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { OpenAI } from 'openai';
+import corsMiddleware from '../middlewares/cors.middleware';
 
 // Types
 interface GrammarCheckRequest {
@@ -18,27 +19,14 @@ const openai = new OpenAI({
 
 const router = express.Router();
 
-// CORS middleware for API routes
-const setCorsHeaders = (req: Request, res: Response, next: NextFunction) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  next();
-};
-
-// Apply CORS headers to all routes
-router.use(setCorsHeaders);
-
-// Handle OPTIONS requests explicitly
-router.options('/grammar-check', (req: Request, res: Response) => {
-  res.status(204).end();
-});
+// Apply CORS middleware to all routes
+router.use(corsMiddleware());
 
 // Grammar check endpoint
 router.post('/grammar-check', async (req: Request, res: Response) => {
   try {
     const { text } = req.body as GrammarCheckRequest;
-    
+
     if (!text) {
       res.status(500).json({ error: 'Failed to check grammar' }).end();
     }

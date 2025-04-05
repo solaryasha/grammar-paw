@@ -16,7 +16,7 @@ function App() {
     setOriginalText(text);
     
     try {
-      const response = await axios.post<{ correctedText: string }>('http://localhost:5000/api/grammar-check', { text });
+      const response = await axios.post<{ correctedText: string }>('http://localhost:4000/api/grammar-check', { text });
       setCorrectedText(response.data.correctedText);
     } catch (err) {
       setError('Error checking grammar. Please try again.');

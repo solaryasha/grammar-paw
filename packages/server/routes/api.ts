@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import { OpenAI } from 'openai';
-import corsMiddleware from '../middlewares/cors.middleware';
 
 // Types
 interface GrammarCheckRequest {
@@ -19,8 +18,6 @@ const openai = new OpenAI({
 
 const router = express.Router();
 
-// Apply CORS middleware to all routes
-router.use(corsMiddleware());
 
 // Grammar check endpoint
 router.post('/grammar-check', async (req: Request, res: Response) => {

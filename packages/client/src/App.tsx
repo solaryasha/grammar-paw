@@ -4,6 +4,9 @@ import './App.css';
 import GrammarForm from './components/GrammarForm';
 import Results from './components/Results';
 
+// Get API URL from environment variable with fallback
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+
 function App() {
   const [originalText, setOriginalText] = useState<string>('');
   const [correctedText, setCorrectedText] = useState<string>('');
@@ -16,7 +19,7 @@ function App() {
     setOriginalText(text);
     
     try {
-      const response = await axios.post<{ correctedText: string }>('http://localhost:4000/api/grammar-check', { text });
+      const response = await axios.post<{ correctedText: string }>(`${API_URL}/api/grammar-check`, { text });
       setCorrectedText(response.data.correctedText);
     } catch (err) {
       setError('Error checking grammar. Please try again.');

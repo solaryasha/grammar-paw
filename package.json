@@ -2,12 +2,14 @@
   "name": "grammar-paw",
   "version": "1.0.0",
   "description": "AI-powered grammar checking application",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "client": "cd client && npm run dev",
-    "server": "cd server && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "concurrently \"cd client && npm run build\" \"cd server && npm run build\""
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
   },
   "keywords": [
     "grammar",
@@ -18,7 +20,9 @@
   ],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.2.2"
-  }
+  "dependencies": {},
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "packageManager": "npm@10.0.0"
 }

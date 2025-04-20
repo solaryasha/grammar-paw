@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import GrammarForm from '@/components/GrammarForm';
 import Results from '@/components/Results';
+import Loader from '@/components/Loader';
 
 export default function Home() {
   const [originalText, setOriginalText] = useState<string>('');
@@ -34,29 +35,23 @@ export default function Home() {
         <p className="text-lg text-gray-600">Improve your writing with AI-powered grammar checking</p>
       </div>
 
-      <div className="flex-grow">
-        <GrammarForm onSubmit={checkGrammar} isLoading={isLoading} />
-
-        {isLoading && (
-          <div className="max-w-3xl mx-auto text-center py-4 text-gray-600">
-            Checking grammar...
-          </div>
-        )}
-
+      <div className="flex-grow flex flex-col">
         {error && (
           <div className="max-w-3xl mx-auto text-center py-4 text-red-600">
             {error}
           </div>
         )}
 
-        {correctedText && (
+        {isLoading ? (
+          <Loader />
+        ) : correctedText && (
           <Results originalText={originalText} correctedText={correctedText} />
         )}
-      </div>
 
-      <footer className="max-w-3xl mx-auto mt-8 text-center text-gray-500">
-        <p>Powered by OpenAI • {new Date().getFullYear()}</p>
-      </footer>
+        <div className="mt-auto pt-8">
+          <GrammarForm onSubmit={checkGrammar} isLoading={isLoading} />
+        </div>
+      </div>
     </main>
   );
 }

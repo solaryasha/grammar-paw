@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 
 interface GrammarFormProps {
   onSubmit: (text: string) => void;
@@ -9,6 +9,12 @@ interface GrammarFormProps {
 
 const GrammarForm: React.FC<GrammarFormProps> = ({ onSubmit, isLoading }) => {
   const [text, setText] = useState<string>('');
+
+  useEffect(() => {
+    if (!isLoading) {
+      setText('');
+    }
+  }, [isLoading]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +35,7 @@ const GrammarForm: React.FC<GrammarFormProps> = ({ onSubmit, isLoading }) => {
             value={text}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
             placeholder="Type or paste your text here for grammar checking..."
-            rows={3}
+            rows={1}
             disabled={isLoading}
             required
             className="w-full p-3 border border-gray-300 rounded-md font-inherit text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/25 disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"

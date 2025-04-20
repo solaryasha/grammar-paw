@@ -29,10 +29,10 @@ const GrammarForm: React.FC<GrammarFormProps> = ({ onSubmit, isLoading }) => {
             value={text}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
             placeholder="Type or paste your text here for grammar checking..."
-            rows={8}
+            rows={3}
             disabled={isLoading}
             required
-            className="w-full p-3 border border-gray-300 rounded-md font-inherit text-base transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/25 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full p-3 border border-gray-300 rounded-md font-inherit text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/25 disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
           />
         </div>
         <button 

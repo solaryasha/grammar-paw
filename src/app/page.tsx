@@ -28,29 +28,31 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen p-8">
+    <main className="min-h-screen p-8 flex flex-col">
       <div className="max-w-3xl mx-auto mb-8 text-center">
         <h1 className="text-4xl font-bold mb-4">Grammar Paw</h1>
         <p className="text-lg text-gray-600">Improve your writing with AI-powered grammar checking</p>
       </div>
 
-      <GrammarForm onSubmit={checkGrammar} isLoading={isLoading} />
-      
-      {isLoading && (
-        <div className="max-w-3xl mx-auto text-center py-4 text-gray-600">
-          Checking grammar...
-        </div>
-      )}
-      
-      {error && (
-        <div className="max-w-3xl mx-auto text-center py-4 text-red-600">
-          {error}
-        </div>
-      )}
-      
-      {correctedText && (
-        <Results originalText={originalText} correctedText={correctedText} />
-      )}
+      <div className="flex-grow">
+        <GrammarForm onSubmit={checkGrammar} isLoading={isLoading} />
+
+        {isLoading && (
+          <div className="max-w-3xl mx-auto text-center py-4 text-gray-600">
+            Checking grammar...
+          </div>
+        )}
+
+        {error && (
+          <div className="max-w-3xl mx-auto text-center py-4 text-red-600">
+            {error}
+          </div>
+        )}
+
+        {correctedText && (
+          <Results originalText={originalText} correctedText={correctedText} />
+        )}
+      </div>
 
       <footer className="max-w-3xl mx-auto mt-8 text-center text-gray-500">
         <p>Powered by OpenAI • {new Date().getFullYear()}</p>

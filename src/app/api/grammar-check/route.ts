@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 // Types
 interface GrammarCheckRequest {
@@ -9,6 +10,11 @@ interface GrammarCheckResponse {
   originalText: string;
   correctedText: string;
 }
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,13 +27,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Replace this with actual OpenAI integration
-    const correctedText = body.text; // Temporary placeholder
-
-    return NextResponse.json({
-      originalText: body.text,
-      correctedText: correctedText
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful assistant that checks grammar and improves writing. Return the corrected text with explanations for the changes."
+        },
+        {
+          role: "user",
+          content: `Please check and correct the grammar in this text: "${body.text}"`
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
     });
+
+    const responseData: GrammarCheckResponse = {
+      originalText: body.text,
+      correctedText: response.choices[0].message.content || ''
+    };
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Error processing grammar check:', error);
     return NextResponse.json(

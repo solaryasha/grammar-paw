@@ -43,7 +43,9 @@ export default function Home() {
         )}
 
         {isLoading ? (
-          <Loader />
+          <div className="flex-grow flex items-center justify-center">
+            <Loader />
+          </div>
         ) : correctedText && (
           <Results originalText={originalText} correctedText={correctedText} />
         )}

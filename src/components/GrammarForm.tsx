@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, FormEvent, ChangeEvent, useEffect } from 'react';
+import { AutoResizeTextarea } from './ui/autoresize-textarea';
 
 interface GrammarFormProps {
   onSubmit: (text: string) => void;
@@ -30,15 +31,13 @@ const GrammarForm: React.FC<GrammarFormProps> = ({ onSubmit, isLoading }) => {
           <label htmlFor="text-input" className="block font-semibold text-gray-700">
             Enter your text:
           </label>
-          <textarea
-            id="text-input"
-            value={text}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
-            placeholder="Type or paste your text here for grammar checking..."
-            rows={1}
-            disabled={isLoading}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md font-inherit text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/25 disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
+          <AutoResizeTextarea
+           onChange={(value) => setText(value)}
+           placeholder="Type or paste your text here for grammar checking..."
+           disabled={isLoading}
+           required
+           value={text}
+           className='w-full p-3 border border-gray-300 rounded-md font-inherit text-base text-gray-900 transition-[height] focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/25 disabled:bg-gray-100 disabled:cursor-not-allowed'
           />
         </div>
         <button 

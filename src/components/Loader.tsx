@@ -4,14 +4,17 @@ import Image from 'next/image';
 
 const Loader = () => {
   return (
-    <div className='w-25 h-25 bg-white rounded-full flex'>
+    <div className='w-40 h-40 bg-white rounded-full flex items-center justify-center'>
+      <div>
       <Image 
         src='/cat-playing.gif' 
-        width="75" 
-        height="75" 
+        width="40"
+        height="40" 
         alt="a cat shows from the box and hides back"
-        className='rounded-full mx-auto my-auto'
+        className='rounded-full mx-auto'
       />
+        <span className='text-black'>Checking ...</span>
+      </div>
     </div>
   );
 };
